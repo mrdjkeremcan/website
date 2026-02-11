@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MRDJKeremCan // BIO</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="scanlines"></div>
+    <div class="noise"></div>
+
+    <button id="menu-btn" onclick="openNav()">&#9776;</button>
+    <div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a href="index.html">HOME</a>
+        <a href="bio.html">BIOGRAPHY</a>
+        <a href="spotify.html">SPOTIFY</a>
+        <a href="applemusic.html">APPLE MUSIC</a>
+        <a href="soundcloud.html">SOUNDCLOUD</a>
+        <a href="youtube.html">YOUTUBE</a>
+        <a href="events.html">MISSIONS</a>
+        <a href="contact.html">CONTACT / LINKS</a>
+    </div>
+
+    <header id="top-bar">
+        <div class="logo">IDENTITY :: CORE</div>
+    </header>
+
+    <main class="main-container">
+
+        <div class="bio-container">
+            <!-- Language Toggle -->
+            <div class="lang-toggle">
+                <button class="lang-btn active" onclick="setLang('tr')">TR</button>
+                <button class="lang-btn" onclick="setLang('en')">EN</button>
+            </div>
+
+            <h2
+                style="font-family: 'Orbitron', sans-serif; font-size: 2rem; color: var(--neon-blue); text-shadow: 0 0 10px var(--neon-blue); margin-bottom: 20px;">
+                BIO_DATA // MRDJKeremCan
+            </h2>
+
+            <!-- TR Content -->
+            <div id="bio-tr" class="bio-content active">
+                <p>
+                    Kerem Can (MRDJKeremCan), Antalya çıkışlı bir DJ ve prodüktördür. Kariyerine 2015 yılında animasyon
+                    sanatçısı olarak başlayan Kerem Can, zamanla görsel estetiğini elektronik müzikle birleştirerek
+                    kendine özgü bir sound ve sahne dili oluşturmuştur. Afro House ve EDM ağırlıklı setleri; ritüel
+                    atmosferi, groove odaklı yapısı ve peak-time enerjisiyle öne çıkar.
+                </p>
+                <br>
+                <p>
+                    Antalya’da resident DJ olarak sahne alan MRDJKeremCan, aynı zamanda Arte Leisure Group bünyesinde
+                    Sound & Light Chief Resident DJ olarak görev yapmaktadır. Sahnedeki yüksek enerjisi, karanlık ve
+                    hipnotik müzik seçkileri ile güçlü görsel kimliği sayesinde elektronik müzik sahnesinde kendine
+                    sağlam bir yer edinmiş; sosyal medyada aktif duruşu ve sürekli gelişen projeleriyle kitlesiyle güçlü
+                    bir bağ kurmuştur.
+                </p>
+            </div>
+
+            <!-- EN Content -->
+            <div id="bio-en" class="bio-content">
+                <p>
+                    Kerem Can (MRDJKeremCan) is a DJ and producer based in Antalya. He began his creative journey in
+                    2015 as an animation artist, later merging visual aesthetics with electronic music to develop a
+                    distinctive sound and stage identity. His Afro House and EDM-driven sets stand out through
+                    ritual-inspired atmospheres, groove-focused structures, and strong peak-time energy.
+                </p>
+                <br>
+                <p>
+                    Currently performing as a resident DJ in Antalya, MRDJKeremCan also holds the position of Sound &
+                    Light Chief Resident DJ at Arte Leisure Group. Known for his high-energy performances, dark yet
+                    hypnotic selections, and powerful visual identity, he has established a solid presence in the
+                    electronic music scene. Actively engaged on social media, he continues to evolve through new
+                    projects while maintaining a strong connection with his audience.
+                </p>
+            </div>
+        </div>
+
+    </main>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,1255 @@
+:root {
+    --neon-red: #ff003c;
+    --neon-blue: #00f3ff;
+    --neon-green: #53FC18;
+    --bg-dark: #050505;
+    --text-color: #e0e0e0;
+    --glass-bg: rgba(10, 10, 10, 0.95);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-color);
+    font-family: 'Share Tech Mono', monospace;
+    overflow-x: hidden;
+    /* Prevent horizontal scroll */
+    min-height: 100vh;
+    width: 100vw;
+    position: relative;
+    /* Custom Scrollbar for Body */
+    scrollbar-width: thin;
+    scrollbar-color: var(--neon-red) #111;
+}
+
+/* Background Effects */
+.scanlines {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom,
+            rgba(255, 255, 255, 0),
+            rgba(255, 255, 255, 0) 50%,
+            rgba(0, 0, 0, 0.2) 50%,
+            rgba(0, 0, 0, 0.2));
+    background-size: 100% 4px;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.noise {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.05;
+    pointer-events: none;
+    background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1MDAiIGhlaWdodD0iNTAwIj48ZmlsdGVyIGlkPSJnoiPjxmZVR1cmJ1bGVuY2UgdHlwZT0iZnJhY3RhbE5vaXNlIiBiYXNlRnJlcXVlbmN5PSIwLjY1IiBudW1PY3RhdmVzLTMiIHN0aXRjaFRpbGVzPSJzdGl0Y2giLz48L2ZpbHRlcj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWx0ZXI9InVybCgjZykiIG9wYWNpdHk9IjEiLz48L3N2Zz4=');
+    z-index: 9;
+}
+
+/* --- UI COMPONENTS --- */
+
+/* Header */
+#top-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid var(--neon-red);
+    background: rgba(5, 5, 5, 0.9);
+    z-index: 100;
+}
+
+.logo {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 900;
+    color: var(--neon-red);
+    text-shadow: 0 0 10px var(--neon-red);
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* Buttons */
+.cyber-btn {
+    display: inline-block;
+    background: transparent;
+    border: 1px solid var(--neon-red);
+    color: var(--neon-red);
+    padding: 10px 20px;
+    font-family: 'Share Tech Mono', monospace;
+    cursor: pointer;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.3s;
+    box-shadow: 0 0 5px var(--neon-red);
+    border-radius: 4px;
+    text-align: center;
+}
+
+.cyber-btn:hover {
+    background: var(--neon-red);
+    color: var(--bg-dark);
+    box-shadow: 0 0 20px var(--neon-red);
+}
+
+/* Sidebar Navigation */
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 300;
+    top: 0;
+    left: 0;
+    background-color: rgba(5, 5, 5, 0.98);
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+    border-right: 1px solid var(--neon-red);
+}
+
+.sidenav a {
+    padding: 15px 15px 15px 32px;
+    text-decoration: none;
+    font-size: 1.4rem;
+    color: #888;
+    display: block;
+    transition: 0.3s;
+    font-family: 'Orbitron', sans-serif;
+    text-transform: uppercase;
+}
+
+.sidenav a:hover {
+    color: var(--neon-red);
+    padding-left: 45px;
+    /* Slight movement effect */
+    text-shadow: 0 0 10px var(--neon-red);
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+    padding: 0;
+}
+
+#menu-btn {
+    font-size: 30px;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    color: var(--neon-red);
+    text-shadow: 0 0 5px var(--neon-red);
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 150;
+    transition: color 0.3s;
+}
+
+#menu-btn:hover {
+    color: #fff;
+    text-shadow: 0 0 15px var(--neon-red);
+}
+
+/* --- MAIN CONTAINERS --- */
+
+.main-container {
+    padding-top: 100px;
+    /* Space for fixed header */
+    padding-bottom: 50px;
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.content-wrapper {
+    width: 95%;
+    max-width: 1400px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+/* --- HOME PAGE STYLES --- */
+.hero-box {
+    background: var(--glass-bg);
+    border: 1px solid var(--neon-red);
+    padding: 40px;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(255, 0, 60, 0.2);
+    margin-bottom: 30px;
+    transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+    z-index: 20;
+    position: relative;
+    max-width: 600px;
+}
+
+h1.glitch {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 3.5rem;
+    position: relative;
+    color: white;
+    margin-bottom: 10px;
+}
+
+h1.glitch::before,
+h1.glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--bg-dark);
+}
+
+h1.glitch::before {
+    left: 2px;
+    text-shadow: -1px 0 red;
+    clip: rect(24px, 550px, 90px, 0);
+    animation: glitch-anim-2 3s infinite linear alternate-reverse;
+}
+
+h1.glitch::after {
+    left: -2px;
+    text-shadow: -1px 0 blue;
+    clip: rect(85px, 550px, 140px, 0);
+    animation: glitch-anim 2.5s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-anim {
+    0% {
+        clip: rect(12px, 9999px, 81px, 0);
+    }
+
+    100% {
+        clip: rect(28px, 9999px, 53px, 0);
+    }
+}
+
+@keyframes glitch-anim-2 {
+    0% {
+        clip: rect(65px, 9999px, 11px, 0);
+    }
+
+    100% {
+        clip: rect(93px, 9999px, 60px, 0);
+    }
+}
+
+.slide-down {
+    transform: translateY(400px) !important;
+}
+
+.reveal-quote {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 800px;
+    text-align: center;
+    font-family: 'Orbitron', sans-serif;
+    color: var(--neon-blue);
+    font-size: 1.5rem;
+    line-height: 1.6;
+    text-shadow: 0 0 15px var(--neon-blue);
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.reveal-quote.visible {
+    opacity: 1;
+}
+
+.photo-circle {
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid var(--neon-red);
+    box-shadow: 0 0 30px var(--neon-red);
+    transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+    z-index: 20;
+}
+
+.photo-circle img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: sepia(20%) contrast(110%);
+}
+
+/* --- MUSIC PAGE STYLES (Apple Music / YouTube / Spotify) --- */
+.music-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--neon-red);
+    /* Default Red */
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(255, 0, 60, 0.2);
+    overflow: hidden;
+    width: 100%;
+}
+
+.split-layout {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    width: 95%;
+    max-width: 1600px;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.col-main {
+    flex: 2;
+    min-width: 400px;
+}
+
+.col-side {
+    flex: 1;
+    min-width: 320px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Playlist Scrollbar */
+.playlist-scroll {
+    max-height: 500px;
+    overflow-y: auto;
+    padding-right: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.playlist-scroll::-webkit-scrollbar {
+    width: 6px;
+}
+
+.playlist-scroll::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.playlist-scroll::-webkit-scrollbar-thumb {
+    background: var(--neon-red);
+    border-radius: 3px;
+}
+
+/* Video Embed Container (Responsive 16:9) */
+.video-container {
+    position: relative;
+    padding-bottom: 56.25%;
+    /* 16:9 */
+    height: 0;
+    overflow: hidden;
+    border-radius: 10px;
+    border: 1px solid #333;
+    background: #000;
+}
+
+.video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* --- CONTACT PAGE STYLES --- */
+.contact-grid-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 450px 1fr;
+    /* Middle is fixed width */
+    gap: 40px;
+    width: 95%;
+    max-width: 1800px;
+    margin: 0 auto;
+    align-items: start;
+}
+
+.contact-card {
+    background: var(--glass-bg);
+    padding: 25px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 620px;
+    /* Unified Height */
+    border: 1px solid #333;
+    border-radius: 8px;
+}
+
+.card-insta {
+    justify-self: end;
+    width: 100%;
+    max-width: 500px;
+    border-color: #E1306C;
+    box-shadow: 0 0 15px rgba(225, 48, 108, 0.3);
+}
+
+.card-email {
+    align-self: start;
+    width: 100%;
+    border-color: var(--neon-blue);
+    box-shadow: 0 0 15px rgba(0, 243, 255, 0.2);
+    justify-content: center;
+}
+
+.card-kick {
+    justify-self: start;
+    width: 100%;
+    max-width: 600px;
+    border-color: var(--neon-green);
+    box-shadow: 0 0 15px rgba(83, 252, 24, 0.3);
+}
+
+.social-btn {
+    display: inline-block;
+    padding: 8px 20px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 700;
+    font-family: 'Share Tech Mono', monospace;
+    transition: all 0.3s ease;
+    background: transparent;
+    margin-bottom: 15px;
+}
+
+.social-btn.insta {
+    border: 1px solid #E1306C;
+    color: #E1306C;
+}
+
+.social-btn.insta:hover {
+    background: #E1306C;
+    color: #fff;
+    box-shadow: 0 0 15px #E1306C;
+}
+
+.social-btn.kick {
+    border: 1px solid var(--neon-green);
+    color: var(--neon-green);
+}
+
+.social-btn.kick:hover {
+    background: var(--neon-green);
+    color: #000;
+    box-shadow: 0 0 15px var(--neon-green);
+}
+
+.email-display {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.3rem;
+    color: var(--neon-blue);
+    text-decoration: none;
+    font-weight: 700;
+    margin-top: 20px;
+    display: block;
+    transition: 0.3s;
+}
+
+.email-display:hover {
+    color: #fff;
+    text-shadow: 0 0 20px var(--neon-blue);
+}
+
+/* --- BIO PAGE STYLES --- */
+.bio-container {
+    max-width: 800px;
+    width: 90%;
+    background: var(--glass-bg);
+    border: 1px solid var(--neon-red);
+    box-shadow: 0 0 20px rgba(255, 0, 60, 0.2);
+    padding: 40px;
+    text-align: center;
+    position: relative;
+    z-index: 5;
+}
+
+.lang-toggle {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.lang-btn {
+    background: transparent;
+    border: 1px solid var(--neon-blue);
+    color: var(--neon-blue);
+    padding: 5px 15px;
+    font-family: 'Orbitron', sans-serif;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: 0.3s;
+}
+
+.lang-btn.active,
+.lang-btn:hover {
+    background: var(--neon-blue);
+    color: #000;
+    box-shadow: 0 0 10px var(--neon-blue);
+}
+
+.bio-content {
+    display: none;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #ddd;
+    animation: fadeIn 0.5s ease;
+}
+
+.bio-content.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --- RESPONSIVE QUERIES --- */
+@media (max-width: 1200px) {
+    .contact-grid-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .contact-card {
+        height: auto;
+        min-height: 500px;
+        width: 100%;
+        max-width: 600px;
+    }
+
+    .card-email {
+        min-height: 350px;
+        order: -1;
+        /* Put email at top on mobile? optional */
+    }
+
+    .split-layout {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .col-main,
+    .col-side {
+        width: 100%;
+    }
+}
+
+/* --- MOBILE OPTIMIZATION --- */
+@media (max-width: 768px) {
+
+    /* Global Typography */
+    html {
+        font-size: 14px;
+    }
+
+    body {
+        cursor: auto !important;
+        /* Restore default cursor */
+        overflow-x: hidden;
+    }
+
+    /* Disable Custom Cursor */
+    #custom-cursor {
+        display: none !important;
+    }
+
+    h1.glitch {
+        font-size: 2.5rem;
+        margin-top: 20px;
+        line-height: 1.2;
+    }
+
+    .main-container {
+        padding-top: 80px;
+        padding-bottom: 80px;
+        /* Space for chat/bottom nav if needed */
+        padding-left: 15px;
+        padding-right: 15px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    /* Header & Navigation */
+    #top-bar {
+        padding: 10px 20px;
+        height: 60px;
+        justify-content: center;
+    }
+
+    .logo {
+        font-size: 1.1rem;
+        white-space: nowrap;
+    }
+
+    .sidenav {
+        /* Width handled by JS */
+        padding-top: 80px;
+        background-color: rgba(5, 5, 5, 0.98);
+        border-right: none;
+        border-bottom: 2px solid var(--neon-red);
+    }
+
+    /* When opened via JS, it sets width. We might need to override the JS width or handle it in JS. 
+       Let's use a class based approach if possible or just accept the JS inline style. 
+       Actually, standard sidenav open sets width to 250px. We want 100%. 
+       We will need to update script.js to handle this or use !important here if we can target the open state.
+       Since JS sets style="..." inline, !important here on a class might not work unless we add a class. 
+       Let's stick to modifying Script.js for the width logic to be cleaner.
+    */
+
+    /* Sidebar Links */
+    .sidenav a {
+        font-size: 1.3rem;
+        padding: 15px 20px;
+        text-align: center;
+        border-bottom: 1px solid rgba(255, 0, 60, 0.1);
+    }
+
+    #menu-btn {
+        top: 15px;
+        left: 15px;
+        font-size: 24px;
+        z-index: 200;
+        /* Ensure above everything */
+    }
+
+    /* Index Page Layout */
+    .hero-box {
+        padding: 25px;
+        width: 100%;
+        margin-bottom: 30px;
+        background: rgba(10, 10, 10, 0.85);
+        /* Slightly more opaque for readability */
+    }
+
+    .photo-circle {
+        width: 220px;
+        height: 220px;
+        margin: 0 auto;
+        border-width: 2px;
+    }
+
+    .reveal-quote {
+        font-size: 1.1rem;
+        width: 95%;
+        top: 50%;
+    }
+
+    /* Flex Containers Stacking */
+    .content-wrapper,
+    .split-layout,
+    .contact-grid-wrapper {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        width: 100%;
+    }
+
+    /* Full Width Items */
+    .col-main,
+    .col-side,
+    .contact-card,
+    .bio-container,
+    .music-card {
+        width: 100% !important;
+        min-width: 0 !important;
+        /* Allow shrinking */
+        max-width: 100% !important;
+        margin-right: 0;
+        margin-left: 0;
+    }
+
+    /* Music Pages */
+    iframe {
+        max-width: 100%;
+    }
+
+    /* Events Table */
+    .mission-table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .mission-table th,
+    .mission-table td {
+        padding: 10px;
+        font-size: 0.9rem;
+    }
+
+    /* Contact Page */
+    .contact-card {
+        height: auto;
+        min-height: auto;
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
+    .card-insta,
+    .card-email,
+    .card-kick {
+        max-width: 100%;
+        box-shadow: none;
+        /* Reduce glow on mobile for performance? or just keep it */
+        border: 1px solid var(--neon-red);
+    }
+
+    /* Emails can be long, ensure wrap */
+    .email-display {
+        font-size: 1rem;
+        word-break: break-all;
+    }
+
+    /* Chat Widget - Bottom Sheet Style */
+    #chat-widget {
+        width: 100%;
+        right: 0;
+        bottom: 0;
+        border-radius: 10px 10px 0 0;
+        border-left: none;
+        border-right: none;
+        border-bottom: none;
+    }
+
+    /* Hide Launchpad Overlay Visuals on Mobile (Keys don't exist) */
+    #launchpad-overlay {
+        display: none;
+    }
+}
+
+/* --- GLOBAL EFFECTS --- */
+
+/* Matrix Rain Canvas */
+#matrix-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    /* Behind content, above base bg */
+    pointer-events: none;
+    opacity: 0.15;
+    /* Subtle effect */
+}
+
+
+
+/* Retro Chat Widget */
+#chat-widget {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 320px;
+    background: rgba(5, 5, 5, 0.95);
+    border: 1px solid var(--neon-red);
+    box-shadow: 0 0 15px rgba(255, 0, 60, 0.2);
+    z-index: 200;
+    font-family: 'Share Tech Mono', monospace;
+    display: flex;
+    flex-direction: column;
+    transition: bottom 0.3s;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+#chat-header {
+    background: var(--neon-red);
+    color: #000;
+    padding: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#chat-body {
+    height: 250px;
+    overflow-y: auto;
+    padding: 10px;
+    border-bottom: 1px solid #333;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    scrollbar-width: thin;
+}
+
+.chat-msg {
+    font-size: 0.85rem;
+    line-height: 1.4;
+}
+
+.chat-msg.system {
+    color: #888;
+    font-style: italic;
+    font-size: 0.8rem;
+}
+
+.chat-msg.user {
+    color: var(--neon-blue);
+    text-align: right;
+}
+
+.chat-msg.guest {
+    color: var(--neon-green);
+}
+
+#chat-input-area {
+    padding: 10px;
+    display: flex;
+    gap: 5px;
+    background: #111;
+}
+
+#chat-input {
+    flex: 1;
+    background: transparent;
+    border: 1px solid #333;
+    color: #fff;
+    padding: 8px;
+    font-family: inherit;
+    border-radius: 4px;
+}
+
+#chat-send {
+    background: var(--neon-red);
+    border: none;
+    color: #000;
+    padding: 0 15px;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 4px;
+}
+
+#chat-send:hover {
+    background: #fff;
+}
+
+/* Easter Egg Modal */
+#hack-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.95);
+    border: 2px solid var(--neon-green);
+    padding: 50px;
+    z-index: 1000;
+    text-align: center;
+    box-shadow: 0 0 30px var(--neon-green);
+    display: none;
+    /* Hidden by default */
+    border-radius: 10px;
+    min-width: 400px;
+}
+
+.hack-text {
+    color: var(--neon-green);
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    text-shadow: 0 0 15px var(--neon-green);
+}
+
+.overlay-scan {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 255, 0, 0.1);
+    z-index: 999;
+    display: none;
+    pointer-events: none;
+    animation: flash 0.5s infinite;
+}
+
+@keyframes flash {
+    0% {
+        opacity: 0.1;
+    }
+
+    50% {
+        opacity: 0.2;
+    }
+
+    100% {
+        opacity: 0.1;
+    }
+}
+
+/* 2. System Boot Screen */
+#boot-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    z-index: 10000;
+    /* Top most layer */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 50px;
+    font-family: 'Share Tech Mono', monospace;
+    color: var(--neon-green);
+    font-size: 1.2rem;
+    overflow: hidden;
+}
+
+.boot-line {
+    opacity: 0;
+    animation: typeLine 0.1s forwards;
+    margin-bottom: 5px;
+    text-shadow: 0 0 5px var(--neon-green);
+}
+
+@keyframes typeLine {
+    to {
+        opacity: 1;
+    }
+}
+
+/* 3. Launchpad Visuals */
+#launchpad-overlay {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    display: flex;
+    gap: 10px;
+    z-index: 100;
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+.pad-key {
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--neon-blue);
+    color: var(--neon-blue);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-family: 'Share Tech Mono';
+    background: rgba(0, 0, 0, 0.5);
+    transition: all 0.1s;
+}
+
+.pad-key.active {
+    background: var(--neon-blue);
+    color: #000;
+    box-shadow: 0 0 15px var(--neon-blue);
+    transform: scale(0.95);
+}
+
+/* 4. Glitch Gallery Effects */
+.glitch-hover {
+    position: relative;
+    overflow: hidden;
+}
+
+.glitch-hover:hover {
+    animation: glitch-skew 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
+    color: var(--neon-red);
+}
+
+.glitch-hover:hover img {
+    filter: invert(1);
+}
+
+@keyframes glitch-skew {
+    0% {
+        transform: skew(0deg);
+    }
+
+    20% {
+        transform: skew(-2deg);
+    }
+
+    40% {
+        transform: skew(2deg);
+    }
+
+    60% {
+        transform: skew(-1deg);
+    }
+
+    80% {
+        transform: skew(1deg);
+    }
+
+    100% {
+        transform: skew(0deg);
+    }
+}
+
+/* Custom Cursor */
+body {
+    cursor: none;
+}
+
+#custom-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    border: 1px solid var(--neon-green);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 9999;
+    background: rgba(83, 252, 24, 0.1);
+    box-shadow: 0 0 10px var(--neon-green);
+    transition: width 0.1s, height 0.1s;
+    mix-blend-mode: exclusion;
+}
+
+#custom-cursor::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 2px;
+    height: 2px;
+    background: var(--neon-green);
+    transform: translate(-50%, -50%);
+}
+
+#custom-cursor.click {
+    width: 15px;
+    height: 15px;
+    background: var(--neon-red);
+    border-color: var(--neon-red);
+}
+
+body.hovering #custom-cursor {
+    width: 40px;
+    height: 40px;
+    border-style: dashed;
+    animation: rotateCursor 4s infinite linear;
+}
+
+@keyframes rotateCursor {
+    from {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}/ *   - - -   M O B I L E   O P T I M I Z A T I O N   - - -   * /  
+ @ m e d i a   ( m a x - w i d t h :   7 6 8 p x )   {  
+  
+         / *   G l o b a l   T y p o g r a p h y   * /  
+         h t m l   {  
+                 f o n t - s i z e :   1 4 p x ;  
+         }  
+  
+         b o d y   {  
+                 c u r s o r :   a u t o   ! i m p o r t a n t ;  
+                 / *   R e s t o r e   d e f a u l t   c u r s o r   * /  
+                 o v e r f l o w - x :   h i d d e n ;  
+         }  
+  
+         / *   D i s a b l e   C u s t o m   C u r s o r   * /  
+         # c u s t o m - c u r s o r   {  
+                 d i s p l a y :   n o n e   ! i m p o r t a n t ;  
+         }  
+  
+         h 1 . g l i t c h   {  
+                 f o n t - s i z e :   2 . 5 r e m ;  
+                 m a r g i n - t o p :   2 0 p x ;  
+                 l i n e - h e i g h t :   1 . 2 ;  
+         }  
+  
+         . m a i n - c o n t a i n e r   {  
+                 p a d d i n g - t o p :   8 0 p x ;  
+                 p a d d i n g - b o t t o m :   8 0 p x ;  
+                 p a d d i n g - l e f t :   1 5 p x ;  
+                 p a d d i n g - r i g h t :   1 5 p x ;  
+                 d i s p l a y :   f l e x ;  
+                 f l e x - d i r e c t i o n :   c o l u m n ;  
+                 a l i g n - i t e m s :   c e n t e r ;  
+         }  
+  
+         / *   H e a d e r   &   N a v i g a t i o n   * /  
+         # t o p - b a r   {  
+                 p a d d i n g :   1 0 p x   2 0 p x ;  
+                 h e i g h t :   6 0 p x ;  
+                 j u s t i f y - c o n t e n t :   c e n t e r ;  
+         }  
+  
+         . l o g o   {  
+                 f o n t - s i z e :   1 . 1 r e m ;  
+                 w h i t e - s p a c e :   n o w r a p ;  
+         }  
+  
+         . s i d e n a v   {  
+                 / *   W i d t h   h a n d l e d   b y   J S   * /  
+                 p a d d i n g - t o p :   8 0 p x ;  
+                 b a c k g r o u n d - c o l o r :   r g b a ( 5 ,   5 ,   5 ,   0 . 9 8 ) ;  
+                 b o r d e r - r i g h t :   n o n e ;  
+                 b o r d e r - b o t t o m :   2 p x   s o l i d   v a r ( - - n e o n - r e d ) ;  
+         }  
+  
+         / *   S i d e b a r   L i n k s   * /  
+         . s i d e n a v   a   {  
+                 f o n t - s i z e :   1 . 3 r e m ;  
+                 p a d d i n g :   1 5 p x   2 0 p x ;  
+                 t e x t - a l i g n :   c e n t e r ;  
+                 b o r d e r - b o t t o m :   1 p x   s o l i d   r g b a ( 2 5 5 ,   0 ,   6 0 ,   0 . 1 ) ;  
+         }  
+  
+         # m e n u - b t n   {  
+                 t o p :   1 5 p x ;  
+                 l e f t :   1 5 p x ;  
+                 f o n t - s i z e :   2 4 p x ;  
+                 z - i n d e x :   2 0 0 ;  
+         }  
+  
+         / *   I n d e x   P a g e   L a y o u t   * /  
+         . h e r o - b o x   {  
+                 p a d d i n g :   2 5 p x ;  
+                 w i d t h :   1 0 0 % ;  
+                 m a r g i n - b o t t o m :   3 0 p x ;  
+                 b a c k g r o u n d :   r g b a ( 1 0 ,   1 0 ,   1 0 ,   0 . 8 5 ) ;  
+         }  
+  
+         . p h o t o - c i r c l e   {  
+                 w i d t h :   2 2 0 p x ;  
+                 h e i g h t :   2 2 0 p x ;  
+                 m a r g i n :   0   a u t o ;  
+                 b o r d e r - w i d t h :   2 p x ;  
+         }  
+  
+         . r e v e a l - q u o t e   {  
+                 f o n t - s i z e :   1 . 1 r e m ;  
+                 w i d t h :   9 5 % ;  
+                 t o p :   5 0 % ;  
+         }  
+  
+         / *   F l e x   C o n t a i n e r s   S t a c k i n g   * /  
+         . c o n t e n t - w r a p p e r ,  
+         . s p l i t - l a y o u t ,  
+         . c o n t a c t - g r i d - w r a p p e r   {  
+                 f l e x - d i r e c t i o n :   c o l u m n ;  
+                 a l i g n - i t e m s :   c e n t e r ;  
+                 g a p :   2 0 p x ;  
+                 w i d t h :   1 0 0 % ;  
+         }  
+  
+         / *   F u l l   W i d t h   I t e m s   * /  
+         . c o l - m a i n ,  
+         . c o l - s i d e ,  
+         . c o n t a c t - c a r d ,  
+         . b i o - c o n t a i n e r ,  
+         . m u s i c - c a r d   {  
+                 w i d t h :   1 0 0 %   ! i m p o r t a n t ;  
+                 m i n - w i d t h :   0   ! i m p o r t a n t ;  
+                 m a x - w i d t h :   1 0 0 %   ! i m p o r t a n t ;  
+                 m a r g i n - r i g h t :   0 ;  
+                 m a r g i n - l e f t :   0 ;  
+         }  
+  
+         / *   M u s i c   P a g e s   * /  
+         i f r a m e   {  
+                 m a x - w i d t h :   1 0 0 % ;  
+         }  
+  
+         / *   E v e n t s   T a b l e   * /  
+         . m i s s i o n - t a b l e   {  
+                 d i s p l a y :   b l o c k ;  
+                 o v e r f l o w - x :   a u t o ;  
+                 w h i t e - s p a c e :   n o w r a p ;  
+                 - w e b k i t - o v e r f l o w - s c r o l l i n g :   t o u c h ;  
+         }  
+  
+         . m i s s i o n - t a b l e   t h ,  
+         . m i s s i o n - t a b l e   t d   {  
+                 p a d d i n g :   1 0 p x ;  
+                 f o n t - s i z e :   0 . 9 r e m ;  
+         }  
+  
+         / *   C o n t a c t   P a g e   * /  
+         . c o n t a c t - c a r d   {  
+                 h e i g h t :   a u t o ;  
+                 m i n - h e i g h t :   a u t o ;  
+                 p a d d i n g :   2 0 p x ;  
+                 m a r g i n - b o t t o m :   2 0 p x ;  
+         }  
+  
+         . c a r d - i n s t a ,  
+         . c a r d - e m a i l ,  
+         . c a r d - k i c k   {  
+                 m a x - w i d t h :   1 0 0 % ;  
+                 b o x - s h a d o w :   n o n e ;  
+                 b o r d e r :   1 p x   s o l i d   v a r ( - - n e o n - r e d ) ;  
+         }  
+  
+         . e m a i l - d i s p l a y   {  
+                 f o n t - s i z e :   1 r e m ;  
+                 w o r d - b r e a k :   b r e a k - a l l ;  
+         }  
+  
+         / *   C h a t   W i d g e t   -   B o t t o m   S h e e t   S t y l e   * /  
+         # c h a t - w i d g e t   {  
+                 w i d t h :   1 0 0 % ;  
+                 r i g h t :   0 ;  
+                 b o t t o m :   0 ;  
+                 b o r d e r - r a d i u s :   1 0 p x   1 0 p x   0   0 ;  
+                 b o r d e r - l e f t :   n o n e ;  
+                 b o r d e r - r i g h t :   n o n e ;  
+                 b o r d e r - b o t t o m :   n o n e ;  
+         }  
+  
+         # l a u n c h p a d - o v e r l a y   {  
+                 d i s p l a y :   n o n e ;  
+         }  
+ }  
+ 

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MRDJKeremCan // APPLE MUSIC</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="scanlines"></div>
+    <div class="noise"></div>
+
+    <button id="menu-btn" onclick="openNav()">&#9776;</button>
+    <div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a href="index.html">HOME</a>
+        <a href="bio.html">BIOGRAPHY</a>
+        <a href="spotify.html">SPOTIFY</a>
+        <a href="applemusic.html">APPLE MUSIC</a>
+        <a href="soundcloud.html">SOUNDCLOUD</a>
+        <a href="youtube.html">YOUTUBE</a>
+        <a href="events.html">MISSIONS</a>
+        <a href="contact.html">CONTACT / LINKS</a>
+    </div>
+
+    <header id="top-bar">
+        <div class="logo">APPLE :: ARCHIVE</div>
+    </header>
+
+    <main class="main-container">
+
+        <div class="split-layout">
+
+            <!-- Left: Artist Profile -->
+            <div class="col-main" style="flex: 1; max-width: 500px;">
+                <div class="music-card" style="height: auto; padding-bottom: 20px;">
+                    <iframe allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write"
+                        sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation"
+                        src="https://embed.music.apple.com/tr/artist/mrdjkeremcan/1863606528"
+                        style="width: 100%; height: 450px; border: none; display: block;">
+                    </iframe>
+
+                    <div style="text-align: center; margin-top: 20px;">
+                        <a class="cyber-btn" href="https://music.apple.com/tr/artist/mrdjkeremcan/1863606528"
+                            target="_blank">
+                            OPEN IN APPLE MUSIC
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Tracks -->
+            <div class="col-side" style="max-width: 500px;">
+                <iframe allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0"
+                    height="150"
+                    style="width:100%; overflow:hidden; border-radius:10px; box-shadow: 0 0 10px rgba(0, 243, 255, 0.2);"
+                    sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation"
+                    src="https://embed.music.apple.com/tr/song/ta-ban/1867799463">
+                </iframe>
+
+                <iframe allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0"
+                    height="150"
+                    style="width:100%; overflow:hidden; border-radius:10px; box-shadow: 0 0 10px rgba(0, 243, 255, 0.2);"
+                    sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation"
+                    src="https://embed.music.apple.com/tr/song/ritual-of-us/1863606729">
+                </iframe>
+
+                <iframe allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0"
+                    height="150"
+                    style="width:100%; overflow:hidden; border-radius:10px; box-shadow: 0 0 10px rgba(0, 243, 255, 0.2);"
+                    sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation"
+                    src="https://embed.music.apple.com/tr/song/out-of-this-world-bianca/1864344632">
+                </iframe>
+            </div>
+
+        </div>
+
+    </main>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

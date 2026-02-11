@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MRDJKeremCan // MISSIONS</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap"
+        rel="stylesheet">
+    <style>
+        .mission-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: 'Share Tech Mono', monospace;
+            color: #ddd;
+            text-align: left;
+        }
+
+        .mission-table th,
+        .mission-table td {
+            padding: 15px;
+            border-bottom: 1px solid rgba(255, 0, 60, 0.2);
+        }
+
+        .mission-table th {
+            color: var(--neon-red);
+            font-family: 'Orbitron', sans-serif;
+            text-transform: uppercase;
+            font-size: 1.1rem;
+            border-bottom: 2px solid var(--neon-red);
+        }
+
+        .mission-table tr:hover td {
+            background: rgba(255, 0, 60, 0.05);
+            color: #fff;
+        }
+
+        .status-pending {
+            color: var(--neon-blue);
+        }
+
+        .status-complete {
+            color: #555;
+            text-decoration: line-through;
+        }
+
+        .status-live {
+            color: var(--neon-green);
+            font-weight: bold;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .mission-card {
+            background: rgba(10, 10, 10, 0.95);
+            border: 1px solid var(--neon-red);
+            box-shadow: 0 0 20px rgba(255, 0, 60, 0.2);
+            padding: 30px;
+            width: 95%;
+            max-width: 1000px;
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="scanlines"></div>
+    <div class="noise"></div>
+
+    <button id="menu-btn" onclick="openNav()">&#9776;</button>
+    <div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a href="index.html">HOME</a>
+        <a href="bio.html">BIOGRAPHY</a>
+        <a href="spotify.html">SPOTIFY</a>
+        <a href="applemusic.html">APPLE MUSIC</a>
+        <a href="soundcloud.html">SOUNDCLOUD</a>
+        <a href="youtube.html">YOUTUBE</a>
+        <a href="events.html">MISSIONS</a>
+        <a href="contact.html">CONTACT / LINKS</a>
+    </div>
+
+    <header id="top-bar">
+        <div class="logo">MISSION :: LOGS</div>
+    </header>
+
+    <main class="main-container">
+
+        <div class="mission-card">
+            <h2 style="font-family: 'Orbitron'; color: var(--neon-blue); margin-bottom: 20px;">UPCOMING_OPERATIONS</h2>
+
+            <table class="mission-table">
+                <thead>
+                    <tr>
+                        <th>DATE</th>
+                        <th>LOCATION / SERVER</th>
+                        <th>MISSION / EVENT</th>
+                        <th>STATUS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>2024.08.15</td>
+                        <td>ANTALYA // ARTE LEISURE</td>
+                        <td>SUMMER_VIBES_V.2</td>
+                        <td class="status-live">LIVE_NOW</td>
+                    </tr>
+                    <tr>
+                        <td>2024.09.01</td>
+                        <td>CYBER_SPACE // TWITCH</td>
+                        <td>DIGITAL_RESIDENCY</td>
+                        <td class="status-pending">PENDING</td>
+                    </tr>
+                    <tr>
+                        <td>2024.09.15</td>
+                        <td>ISTANBUL // UNDERGROUND</td>
+                        <td>NEON_NIGHTS</td>
+                        <td class="status-pending">PENDING</td>
+                    </tr>
+                    <tr>
+                        <td>2024.07.20</td>
+                        <td>ANTALYA // BEACH_CLUB</td>
+                        <td>SUNSET_PROTOCOL</td>
+                        <td class="status-complete">COMPLETED</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="mission-card" style="border-color: var(--neon-blue); box-shadow: 0 0 20px rgba(0, 243, 255, 0.2);">
+            <h2 style="font-family: 'Orbitron'; color: var(--neon-blue); margin-bottom: 20px;">SYSTEM_MESSAGES</h2>
+            <p style="color: #aaa; margin-bottom: 10px;">> ENCRYPTED COMMUNIQUE RECEIVED...</p>
+            <p style="color: #fff; margin-bottom: 10px;">> "The grid is expanding. Prepare for new audio injection." -
+                <i>Unknown Source</i></p>
+            <p style="color: #aaa;">> DECRYPTION COMPLETE.</p>
+        </div>
+
+    </main>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
